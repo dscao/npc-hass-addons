@@ -1,7 +1,7 @@
 {
-  "name": "sgcc_electricity",
+  "name": "selenium_electricity",
   "version": "1.0.0",
-  "slug": "sgcc_electricity",
+  "slug": "selenium_electricity",
   "description": "Make sgcc electricity data available in HA",
   "url": "https://github.com/dscao/selenium-hass-addons",
   "arch": [
