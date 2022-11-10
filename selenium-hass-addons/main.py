@@ -16,16 +16,17 @@ def main():
 
     fetcher = DataFetcher(args["phone_number"], args["password"])
     updator = SensorUpdator(args["hass_url"], args["hass_token"])
-    schedule.every().day.at(JOB_START_TIME).do(run_task, fetcher, updator)
-    run_task(fetcher, updator)
+    entityupdator = SensorentityUpdator(args["hass_url"], args["hass_token"])
+    schedule.every().day.at(JOB_START_TIME).do(run_task, fetcher, updator, entityupdator)
+    run_task(fetcher, updator, entityupdator)
     while True:
         schedule.run_pending()
         time.sleep(1)
 
-def run_task(data_fetcher: DataFetcher, sensor_updator: SensorUpdator):
+def run_task(data_fetcher: DataFetcher, sensor_updator: SensorUpdator, sensorentity_updator: SensorentityUpdator):
     try:
         balance, usage = data_fetcher.fetch()
-        SensorentityUpdator.update("sensor.electricity_95598", balance, {"unit_of_measurement": "CNY", "last_electricity_usage": usage, "update_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")},)
+        sensorentity_updator.update("sensor.electricity_95598", balance, {"unit_of_measurement": "CNY", "last_electricity_usage": usage, "update_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")},)
         sensor_updator.update(BALANCE_SENSOR_NAME, balance, BALANCE_UNIT,)
         sensor_updator.update(USAGE_SENSOR_NAME, usage, USAGE_UNIT)
         logging.info("state-refresh task run successfully!")
