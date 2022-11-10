@@ -1,5 +1,7 @@
 # selenium_electricity
 
+Fork from https://github.com/louisslee/sgcc_electricity (感谢作者）
+
 ## v1.1 更新日志
 
 1.适配多个户号（多个户号相关的实体名称、UI配置（如需），见使用说明）
