@@ -23,7 +23,7 @@ def main():
         schedule.run_pending()
         time.sleep(1)
 
-def run_task(data_fetcher: DataFetcher, sensor_updator: SensorUpdator, sensorentity_updator: SensorentityUpdator):
+def run_task(data_fetcher: DataFetcher, sensorentity_updator: SensorentityUpdator):
     try:
         balance, usage = data_fetcher.fetch()
         sensorentity_updator.update("sensor.electricity_95598", balance, {"unit_of_measurement": "CNY", "last_electricity_usage": usage, "update_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")},)
@@ -34,7 +34,18 @@ def run_task(data_fetcher: DataFetcher, sensor_updator: SensorUpdator, sensorent
         logging.error(f"state-refresh task failed, reason is {e}")
         traceback.print_exc()
 
+def run_task(data_fetcher: DataFetcher, sensorentity_updator: SensorentityUpdator):
+    try:
+        user_id_list, balance_list, last_daily_usage_list, yearly_charge_list, yearly_usage_list = data_fetcher.fetch()
+        for i in range(0, len(user_id_list)):
+            profix = f"_{user_id_list[i]}" if len(user_id_list) > 1 else ""
+            sensorentity_updator.update("sensor.electricity_95598" + profix,  balance_list[i], {"unit_of_measurement": "CNY", "last_electricity_usage"+ profix: last_daily_usage_list[i], "yearly_electricity_usage"+ profix: yearly_usage_list[i], "yearly_electricity_charge"+ profix: yearly_charge_list[i], "update_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")},)
 
+        logging.info("state-refresh task run successfully!")
+    except Exception as e:
+        logging.error(f"state-refresh task failed, reason is {e}")
+        traceback.print_exc()
+        
 def argvs_parsor():
     args = {
     "phone_number": "",
