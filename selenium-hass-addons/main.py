@@ -1,12 +1,12 @@
 from data_fetcher import DataFetcher
-from sensor_updator import SensorUpdator
+from sensor_updator import SensorUpdator, SensorentityUpdator
 import sys
 import logging
 import logging.config
 import traceback
 from const import *
 import schedule
-import time
+import time, datetime
 import re
 
 def main():
@@ -25,6 +25,7 @@ def main():
 def run_task(data_fetcher: DataFetcher, sensor_updator: SensorUpdator):
     try:
         balance, usage = data_fetcher.fetch()
+        SensorentityUpdator.update(BALANCE_SENSOR_NAME, balance, {"unit_of_measurement": "CNY", "last_electricity_usage": usage, "update_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")},)
         sensor_updator.update(BALANCE_SENSOR_NAME, balance, BALANCE_UNIT,)
         sensor_updator.update(USAGE_SENSOR_NAME, usage, USAGE_UNIT)
         logging.info("state-refresh task run successfully!")
