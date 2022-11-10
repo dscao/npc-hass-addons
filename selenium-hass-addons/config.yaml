@@ -1,6 +1,6 @@
 name: "selenium_electricity"
 version: "1.0"
-slug: sgcc_electricity
+slug: selenium_electricity
 description: "Make sgcc electricity data available in HA"
 arch:
   - amd64
