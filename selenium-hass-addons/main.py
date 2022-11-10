@@ -27,8 +27,8 @@ def run_task(data_fetcher: DataFetcher, sensor_updator: SensorUpdator, sensorent
     try:
         balance, usage = data_fetcher.fetch()
         sensorentity_updator.update("sensor.electricity_95598", balance, {"unit_of_measurement": "CNY", "last_electricity_usage": usage, "update_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")},)
-        sensor_updator.update(BALANCE_SENSOR_NAME, balance, BALANCE_UNIT,)
-        sensor_updator.update(USAGE_SENSOR_NAME, usage, USAGE_UNIT)
+        # sensor_updator.update(BALANCE_SENSOR_NAME, balance, BALANCE_UNIT,)
+        # sensor_updator.update(USAGE_SENSOR_NAME, usage, USAGE_UNIT)
         logging.info("state-refresh task run successfully!")
     except Exception as e:
         logging.error(f"state-refresh task failed, reason is {e}")
