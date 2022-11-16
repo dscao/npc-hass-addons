@@ -3,7 +3,7 @@
 Fork from https://github.com/louisslee/sgcc_electricity (感谢作者）
 
 ## 本 addon 方式
-ha的加载项仓库(Repo)添加：https://github.com/dscao/npc-hass-addons
+ha的加载项仓库(Repo)添加：https://github.com/dscao/npc-hass-addons \
 稍后直接安装，编译即可。时间较长，需要ha系统剩余空间大于4.5G。
 
 ## v1.1 更新日志
@@ -13,6 +13,8 @@ ha的加载项仓库(Repo)添加：https://github.com/dscao/npc-hass-addons
 2.增加查看年用电量、电费
 
 3.优化部分已知bug
+
+4.启动时及每天8:10和12:10刷新请求一次。
 
 
 ---------------------------------
