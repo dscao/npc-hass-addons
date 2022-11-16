@@ -18,6 +18,7 @@ def main():
     updator = SensorUpdator(args["hass_url"], args["hass_token"])
     entityupdator = SensorentityUpdator(args["hass_url"], args["hass_token"])
     schedule.every().day.at(JOB_START_TIME).do(run_task, fetcher, entityupdator)
+    schedule.every().day.at(JOB_START_TIME2).do(run_task, fetcher, entityupdator)
     run_task(fetcher, entityupdator)
     while True:
         schedule.run_pending()
