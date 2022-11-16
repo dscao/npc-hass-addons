@@ -17,8 +17,7 @@ def main():
     fetcher = DataFetcher(args["phone_number"], args["password"])
     updator = SensorUpdator(args["hass_url"], args["hass_token"])
     entityupdator = SensorentityUpdator(args["hass_url"], args["hass_token"])
-    schedule.every().day.at(JOB_START_TIME).do(run_task, fetcher, entityupdator)
-    schedule.every().day.at(JOB_START_TIME2).do(run_task, fetcher, entityupdator)
+    schedule.every(JOB_INTERVAL_HOURS).hours.do(run_task, fetcher, updator)
     run_task(fetcher, entityupdator)
     while True:
         schedule.run_pending()
