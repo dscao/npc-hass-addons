@@ -2,6 +2,10 @@
 
 Fork from https://github.com/louisslee/sgcc_electricity (感谢作者）
 
+## 本 addon 方式
+ha的加载项仓库(Repo)添加：https://github.com/dscao/npc-hass-addons
+稍后直接安装，编译即可。时间较长，需要ha系统剩余空间大于4.5G。
+
 ## v1.1 更新日志
 
 1.适配多个户号（多个户号相关的实体名称、UI配置（如需），见使用说明）
