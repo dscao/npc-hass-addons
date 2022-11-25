@@ -39,7 +39,7 @@ def run_task(data_fetcher: DataFetcher, sensorentity_updator: SensorentityUpdato
         user_id_list, balance_list, last_daily_usage_list, yearly_charge_list, yearly_usage_list = data_fetcher.fetch()
         for i in range(0, len(user_id_list)):
             profix = f"_{user_id_list[i]}" if len(user_id_list) > 1 else ""
-            sensorentity_updator.update("sensor.electricity_95598" + profix,  balance_list[i], {"unit_of_measurement": "CNY", "last_electricity_usage"+ profix: last_daily_usage_list[i], "yearly_electricity_usage"+ profix: yearly_usage_list[i], "yearly_electricity_charge"+ profix: yearly_charge_list[i], "update_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")},)
+            sensorentity_updator.update("sensor.electricity_95598" + profix,  balance_list[i], {"unit_of_measurement": "CNY", "last_electricity_usage": last_daily_usage_list[i], "yearly_electricity_usage": yearly_usage_list[i], "yearly_electricity_charge": yearly_charge_list[i], "update_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")},)
 
         logging.info("state-refresh task run successfully!")
     except Exception as e:
