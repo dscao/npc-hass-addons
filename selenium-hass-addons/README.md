@@ -6,6 +6,11 @@ Fork from https://github.com/louisslee/sgcc_electricity (感谢作者）
 ha的加载项仓库(Repo)添加：https://github.com/dscao/npc-hass-addons \
 稍后直接安装，编译即可。时间较长，需要ha系统剩余空间大于4.5G。
 
+## v1.3 更新日志
+
+增加电费属性 是否结清 
+
+
 ## v1.1 更新日志
 
 1.适配多个户号（多个户号相关的实体名称、UI配置（如需），见使用说明）
@@ -83,6 +88,10 @@ template:
         state: "{{ states('sensor.electricity_95598') }}"
         state_class: measurement
         unit_of_measurement: "CNY"
+
+      - name: electricity_balance_is_pay_entity
+        unique_id: electricity_charge_balance_entity
+        state: "{{ state_attr('sensor.electricity_95598', 'is_pay') }}"
  
       - name: last_electricity_usage_entity
         unique_id: last_electricity_usage_entity
@@ -113,26 +122,30 @@ template:
         event_data: 
           entity_id: sensor.electricity_95598_户号
     sensor:
-      - name: electricity_charge_balance_entity
-        unique_id: electricity_charge_balance_entity
+      - name: electricity_charge_balance_entity_户号
+        unique_id: electricity_charge_balance_entity_户号
         state: "{{ states('sensor.electricity_95598_户号') }}"
         state_class: measurement
         unit_of_measurement: "CNY"
+
+     - name: electricity_balance_is_pay_entity_户号
+        unique_id: electricity_charge_balance_entity_户号
+        state: "{{ state_attr('sensor.electricity_95598_户号', 'is_pay') }}"
  
-      - name: last_electricity_usage_entity
-        unique_id: last_electricity_usage_entity
+      - name: last_electricity_usage_entity_户号
+        unique_id: last_electricity_usage_entity_户号
         state: "{{ state_attr('sensor.electricity_95598_户号', 'last_electricity_usage') }}"
         state_class: measurement
         unit_of_measurement: "KWH"
 
-      - name: yearly_electricity_usage_entity
-        unique_id: yearly_electricity_usage_entity
+      - name: yearly_electricity_usage_entity_户号
+        unique_id: yearly_electricity_usage_entity_户号
         state: "{{ state_attr('sensor.electricity_95598_户号', 'yearly_electricity_usage') }}"
         state_class: measurement
         unit_of_measurement: "KWH"
 
-      - name: yearly_electricity_charge_entity
-        unique_id: yearly_electricity_charge_entity
+      - name: yearly_electricity_charge_entity_户号
+        unique_id: yearly_electricity_charge_entity_户号
         state: "{{ state_attr('sensor.electricity_95598_户号', 'yearly_electricity_charge') }}"
         state_class: measurement
         unit_of_measurement: "CNY"
