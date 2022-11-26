@@ -55,4 +55,3 @@ class SensorentityUpdator:
             logging.info(f"Homeassistant REST API invoke, POST on {url}. response[{response.status_code}]: {response.content}")
         except:
             raise Exception("Sensor update failed, please check the network")
-    
