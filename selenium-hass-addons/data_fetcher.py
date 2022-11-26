@@ -50,7 +50,7 @@ class DataFetcher:
             user_id_list = self._get_user_ids(driver)
             logging.info(f"get all user id: {user_id_list}")
 
-            balance_list = self._get_electric_balances(driver, user_id_list)
+            balance_list, balance_list_pay = self._get_electric_balances(driver, user_id_list)
             ### get data except electricity charge balance
             last_daily_usage_list, yearly_charge_list, yearly_usage_list = self._get_other_data(driver, user_id_list)
 
@@ -58,7 +58,7 @@ class DataFetcher:
 
             logging.info("Webdriver quit after fetching data successfully.")
 
-            return user_id_list, balance_list, last_daily_usage_list, yearly_charge_list, yearly_usage_list
+            return user_id_list, balance_list, balance_list_pay, last_daily_usage_list, yearly_charge_list, yearly_usage_list
 
         finally:
                 driver.quit()
@@ -117,6 +117,7 @@ class DataFetcher:
     def _get_electric_balances(self, driver, user_id_list):
 
         balance_list = []
+        balance_list_pay = []
 
         # switch to electricity charge balance page
         driver.get(BALANCE_URL)
@@ -124,15 +125,17 @@ class DataFetcher:
         # get electricity charge balance for each user id
         for i in range(1, len(user_id_list) + 1):
             balance = self._get_eletric_balance(driver)
-            logging.info(f"Get electricity charge balance for {user_id_list[i-1]} successfully, balance is {balance} CNY.")
+            balance_pay = self._get_eletric_balance_pay(driver)
+            logging.info(f"Get electricity charge balance for {user_id_list[i-1]} successfully, balance is {balance} CNY, is_pay {balance_pay}.")
             balance_list.append(balance)
+            balance_list_pay.append(balance_pay)
             
             # swtich to next userid
             if(i != len(user_id_list)):
                 self._click_button(driver, By.CLASS_NAME, "el-input__inner")
                 self._click_button(driver, By.XPATH, f"//ul[@class='el-scrollbar__view el-select-dropdown__list']/li[{i + 1}]")
 
-        return balance_list
+        return balance_list, balance_list_pay
     
     def _get_other_data(self, driver, user_id_list):
 
@@ -182,6 +185,10 @@ class DataFetcher:
     def _get_eletric_balance(self, driver):
         balance = driver.find_element(By.CLASS_NAME,"num").text
         return float(balance)
+        
+    def _get_eletric_balance_pay(self, driver):
+        balance_pay = driver.find_elements(By.CLASS_NAME,"amttxt")[1].text
+        return str(balance_pay)
     
     def _get_yearly_data(self, driver):
 
