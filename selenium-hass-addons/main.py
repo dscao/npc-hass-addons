@@ -25,10 +25,8 @@ def main():
 
 def run_task(data_fetcher: DataFetcher, sensorentity_updator: SensorentityUpdator):
     try:
-        balance, usage = data_fetcher.fetch()
-        sensorentity_updator.update("sensor.electricity_95598", balance, {"unit_of_measurement": "CNY", "last_electricity_usage": usage, "update_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")},)
-        # sensor_updator.update(BALANCE_SENSOR_NAME, balance, BALANCE_UNIT,)
-        # sensor_updator.update(USAGE_SENSOR_NAME, usage, USAGE_UNIT)
+        balance, balance_list_pay, last_daily_usage_list, yearly_charge_list, yearly_usage_list = data_fetcher.fetch()
+        sensorentity_updator.update("sensor.electricity_95598", balance, {"unit_of_measurement": "CNY", "is_pay": balance_list_pay, "last_electricity_usage": last_daily_usage_list, "yearly_electricity_usage": yearly_usage_list, "yearly_electricity_charge": yearly_charge_list, "update_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")},)
         logging.info("state-refresh task run successfully!")
     except Exception as e:
         logging.error(f"state-refresh task failed, reason is {e}")
@@ -36,10 +34,10 @@ def run_task(data_fetcher: DataFetcher, sensorentity_updator: SensorentityUpdato
 
 def run_task(data_fetcher: DataFetcher, sensorentity_updator: SensorentityUpdator):
     try:
-        user_id_list, balance_list, last_daily_usage_list, yearly_charge_list, yearly_usage_list = data_fetcher.fetch()
+        user_id_list, balance_list, balance_list_pay, last_daily_usage_list, yearly_charge_list, yearly_usage_list = data_fetcher.fetch()
         for i in range(0, len(user_id_list)):
             profix = f"_{user_id_list[i]}" if len(user_id_list) > 1 else ""
-            sensorentity_updator.update("sensor.electricity_95598" + profix,  balance_list[i], {"unit_of_measurement": "CNY", "last_electricity_usage": last_daily_usage_list[i], "yearly_electricity_usage": yearly_usage_list[i], "yearly_electricity_charge": yearly_charge_list[i], "update_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")},)
+            sensorentity_updator.update("sensor.electricity_95598" + profix,  balance_list[i], {"unit_of_measurement": "CNY", "is_pay": balance_list_pay[i],"last_electricity_usage": last_daily_usage_list[i], "yearly_electricity_usage": yearly_usage_list[i], "yearly_electricity_charge": yearly_charge_list[i], "update_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")},)
 
         logging.info("state-refresh task run successfully!")
     except Exception as e:
