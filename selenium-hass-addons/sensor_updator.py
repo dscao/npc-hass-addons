@@ -10,7 +10,7 @@ class SensorUpdator:
         self.base_url = base_url[:-1] if base_url.endswith("/") else base_url
         self.token = token
     
-    def update(self, sensorName: str, sensorState:float, sensorUnit: str):
+    def update(self, sensorName: str, sensorState:float, sensorattributes: str):
         token = os.getenv("SUPERVISOR_TOKEN") if self.base_url == SUPERVISOR_URL else self.token
         headers = {
         "Content-Type": "application-json",
