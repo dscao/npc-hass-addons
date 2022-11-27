@@ -19,9 +19,7 @@ class SensorUpdator:
         }
         request_body = {
             "state":sensorState,
-            "attributes": {
-                "unit_of_measurement": sensorUnit
-            }
+            "attributes": sensorattributes
         }
         url = self.base_url + API_PATH + sensorName
 
