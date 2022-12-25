@@ -214,10 +214,10 @@ class DataFetcher:
         self._click_button(driver, By.XPATH, "//div[@class='el-tabs__nav is-top']/div[@id='tab-second']")
         
         # wait for data displayed
-        target = driver.find_element(By.XPATH, "//input[@value='2']")
+        target = driver.find_element(By.XPATH, "//div[@class='el-radio-group radio']")
         WebDriverWait(driver, DRIVER_IMPLICITY_WAIT_TIME).until(EC.visibility_of(target))
         
-        self._click_button(driver, By.XPATH, "//input[@value='2']")
+        self._click_button(driver, By.XPATH, "//div[@class='el-radio-group radio']/lable[1]")
         
         # wait for data displayed
         target = driver.find_element(By.CLASS_NAME, "el-table_5_column_14")
