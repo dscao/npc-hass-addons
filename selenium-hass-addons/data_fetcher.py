@@ -50,7 +50,7 @@ class DataFetcher:
             user_id_list = self._get_user_ids(driver)
             logging.info(f"get all user id: {user_id_list}")
 
-            balance_list, balance_list_pay = self._get_electric_balances(driver, user_id_list)
+            balance_list, balance_list_pay, balance_list_need_pay = self._get_electric_balances(driver, user_id_list)
             ### get data except electricity charge balance
             last_daily_usage_list, yearly_charge_list, yearly_usage_list = self._get_other_data(driver, user_id_list)
 
@@ -58,7 +58,7 @@ class DataFetcher:
 
             logging.info("Webdriver quit after fetching data successfully.")
 
-            return user_id_list, balance_list, balance_list_pay, last_daily_usage_list, yearly_charge_list, yearly_usage_list
+            return user_id_list, balance_list, balance_list_pay, balance_list_need_pay, last_daily_usage_list, yearly_charge_list, yearly_usage_list
 
         finally:
                 driver.quit()
