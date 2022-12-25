@@ -212,6 +212,11 @@ class DataFetcher:
         yearly_charge = driver.find_element(By.XPATH, "//ul[@class='total']/li[2]/span").text
         
         self._click_button(driver, By.XPATH, "//div[@class='el-tabs__nav is-top']/div[@id='tab-second']")
+        
+        # wait for data displayed
+        target = driver.find_element(By.XPATH, "//input[@value='2']")
+        WebDriverWait(driver, DRIVER_IMPLICITY_WAIT_TIME).until(EC.visibility_of(target))
+        
         self._click_button(driver, By.XPATH, "//input[@value='2']")
         
         # wait for data displayed
