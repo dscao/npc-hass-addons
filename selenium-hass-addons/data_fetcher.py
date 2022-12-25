@@ -118,6 +118,7 @@ class DataFetcher:
 
         balance_list = []
         balance_list_pay = []
+        balance_list_need_pay = []
 
         # switch to electricity charge balance page
         driver.get(BALANCE_URL)
@@ -127,8 +128,13 @@ class DataFetcher:
             balance = self._get_eletric_balance(driver)
             balance_pay = self._get_eletric_balance_pay(driver)
             logging.info(f"Get electricity charge balance for {user_id_list[i-1]} successfully, balance is {balance} CNY, is_pay {balance_pay}.")
+            if (balance_pay == "当期已结清"):
+                balance_need_pay = 0
+            else:
+                balance_need_pay = balance
             balance_list.append(balance)
             balance_list_pay.append(balance_pay)
+            balance_list_need_pay.append(balance_need_pay)
             
             # swtich to next userid
             if(i != len(user_id_list)):
