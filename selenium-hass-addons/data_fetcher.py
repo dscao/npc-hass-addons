@@ -52,7 +52,7 @@ class DataFetcher:
 
             balance_list, balance_list_pay, balance_list_need_pay = self._get_electric_balances(driver, user_id_list)
             ### get data except electricity charge balance
-            last_daily_usage_list, yearly_charge_list, yearly_usage_list = self._get_other_data(driver, user_id_list)
+            last_daily_usage_list, yearly_charge_list, yearly_usage_list, thismonth_usage_list = self._get_other_data(driver, user_id_list)
 
             driver.quit()
 
@@ -219,22 +219,28 @@ class DataFetcher:
         target = driver.find_element(By.XPATH, "//div[@class='el-radio-group radio']")
         WebDriverWait(driver, DRIVER_IMPLICITY_WAIT_TIME).until(EC.visibility_of(target))
         
-        self._click_button(driver, By.XPATH, "//input[contains(@class, 'el-radio__original') and contains(@value, 2)]")
+        self._click_button(driver, By.XPATH, "//span[text='近30天']")
         
         # wait for data displayed
-        target = driver.find_element(By.CLASS_NAME, "el-table_5_column_14")
+        target = driver.find_element(By.CLASS_NAME, "numerical")
         WebDriverWait(driver, DRIVER_IMPLICITY_WAIT_TIME).until(EC.visibility_of(target))
         
         # get data
         thismonth_usage = 0
-        electricity_date_list = driver.find_elements(By.XPATH, "//td[@class='el-table_5_column_14']/div").text
-        electricity_value_list = driver.find_elements(By.XPATH, "//td[@class='el-table_5_column_15']/div").text
-        thismonth = electricity_date_list[0].split("-")[1]
-        for m in len(electricity_date_list):
-            if electricity_date_list[m].split("-")[1] == thismonth:
-                thismonth_usage += electricity_value_list[m]        
+        electricity_date_list = driver.find_elements(By.XPATH, "//div[@class='el-table__body-wrapper is-scrolling-none']/table/tbody/tr/td[1]/div")
+        electricity_value_list = driver.find_elements(By.XPATH, "//div[@class='el-table__body-wrapper is-scrolling-none']/table/tbody/tr/td[2]/div")
         
-        return yearly_usage, yearly_charge, thismonth_usage
+        logging.info(f"electricity_last_date： {electricity_date_list[0].text} ")
+        
+        thismonth = electricity_date_list[0].text.split("-")[1]
+        
+        logging.info(f"thismonth： {thismonth} ")
+        
+        for m in range(0, len(electricity_date_list)):
+            if electricity_date_list[m].text.split("-")[1] == thismonth:
+                thismonth_usage += float(electricity_value_list[m].text)
+                
+        return yearly_usage, yearly_charge, round(thismonth_usage,2)
 
         
 
