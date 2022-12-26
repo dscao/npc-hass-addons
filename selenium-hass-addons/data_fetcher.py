@@ -219,7 +219,7 @@ class DataFetcher:
         target = driver.find_element(By.XPATH, "//div[@class='el-radio-group radio']")
         WebDriverWait(driver, DRIVER_IMPLICITY_WAIT_TIME).until(EC.visibility_of(target))
         
-        self._click_button(driver, By.XPATH, "//span[text='近30天']")
+        self._click_button(driver, By.XPATH, "//span[text()='近30天']")
         
         # wait for data displayed
         target = driver.find_element(By.CLASS_NAME, "numerical")
