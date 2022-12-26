@@ -4,7 +4,11 @@ Fork from https://github.com/louisslee/sgcc_electricity (感谢作者）
 
 ## 本 addon 方式
 ha的加载项仓库(Repo)添加：https://github.com/dscao/npc-hass-addons \
-稍后直接安装，编译即可。时间较长，需要ha系统剩余空间大于4.5G。
+稍后直接安装，编译即可。时间较长，需要ha系统剩余空间大于4.5G。编译完成镜像占用1.17G。
+
+## v1.4 更新日志
+
+增加本月用电量属性、欠费金额属性 
 
 ## v1.3 更新日志
 
