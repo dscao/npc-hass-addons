@@ -110,6 +110,18 @@ template:
         state: "{{ state_attr('sensor.electricity_95598', 'yearly_electricity_charge') }}"
         state_class: measurement
         unit_of_measurement: "CNY"
+        
+      - name: electricity_need_pay
+        unique_id: electricity_need_pay
+        state: "{{ state_attr('sensor.electricity_95598', 'need_pay') }}"
+        state_class: measurement
+        unit_of_measurement: "CNY"
+        
+      - name: thismonth_electricity_usage_entity
+        unique_id: thismonth_electricity_usage_entity
+        state: "{{ state_attr('sensor.electricity_95598', 'thismonth_electricity_usage') }}"
+        state_class: measurement
+        unit_of_measurement: "KWH"
 ```
 
 如果你有多个户号，每个户号参照以下配置
@@ -149,6 +161,18 @@ template:
         state: "{{ state_attr('sensor.electricity_95598_户号', 'yearly_electricity_charge') }}"
         state_class: measurement
         unit_of_measurement: "CNY"
+        
+      - name: electricity_need_pay_户号
+        unique_id: electricity_need_pay_户号
+        state: "{{ state_attr('sensor.electricity_95598_户号', 'need_pay') }}"
+        state_class: measurement
+        unit_of_measurement: "CNY"
+        
+      - name: thismonth_electricity_usage_entity_户号
+        unique_id: thismonth_electricity_usage_entity_户号
+        state: "{{ state_attr('sensor.electricity_95598_户号', 'thismonth_electricity_usage') }}"
+        state_class: measurement
+        unit_of_measurement: "KWH"
 ```
 
 
