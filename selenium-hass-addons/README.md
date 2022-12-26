@@ -65,8 +65,11 @@ git pull
 本应用在启动后和每天早上8点抓取数据，并在HA里更新以下一个实体及三个属性
 
 ```
-sensor.electricity_95598：电费余额
+sensor.electricity_95598：电费余额/上期账单金额
+is_pay: 是否当期已结清
+need_pay: 账单欠费金额（后付费用户）
 last_electricity_usage：最近一天用电量
+thismonth_electricity_usage: 本月用电量
 yearly_electricity_usage： 今年以来用电量
 yearly_electricity_charge: 今年以来电费
 ```
