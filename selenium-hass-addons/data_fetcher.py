@@ -150,6 +150,7 @@ class DataFetcher:
         yearly_usage_list = []
         yearly_charge_list = []
         thismonth_usage_list = []
+        last_date_list = []
 
         # swithc to electricity usage page
         driver.get(ELECTRIC_USAGE_URL)
@@ -157,8 +158,8 @@ class DataFetcher:
         # get data for each user id
         for i in range(1, len(user_id_list) + 1):
 
-            yearly_usage, yearly_charge, thismonth_usage = self._get_yearly_data(driver)
-            logging.info(f"Get year power consumption for {user_id_list[i-1]} successfully, yearly_usage is {yearly_usage} kwh, yealrly charge is {yearly_charge} CNY, thismonth_usage is {thismonth_usage} kwh,")
+            yearly_usage, yearly_charge, thismonth_usage, last_date = self._get_yearly_data(driver)
+            logging.info(f"Get year power consumption for {user_id_list[i-1]} successfully, yearly_usage is {yearly_usage} kwh, yealrly charge is {yearly_charge} CNY, thismonth_usage is {thismonth_usage} kwh, last_date is {last_date}")
 
             last_daily_usage = self._get_yesterday_usage(driver)
             logging.info(f"Get daily power consumption for {user_id_list[i-1]} successfully, usage is {last_daily_usage} kwh.")
@@ -167,13 +168,14 @@ class DataFetcher:
             yearly_charge_list.append(yearly_charge)
             yearly_usage_list.append(yearly_usage)
             thismonth_usage_list.append(thismonth_usage)
+            last_date_list.append(last_date)
 
             # switch to next user id
             if(i != len(user_id_list)):
                 self._click_button(driver, By.CLASS_NAME, "el-input.el-input--suffix")
                 self._click_button(driver, By.XPATH, f"//body/div[@class='el-select-dropdown el-popper']//ul[@class='el-scrollbar__view el-select-dropdown__list']/li[{i + 1}]")
             
-        return last_daily_usage_list, yearly_charge_list, yearly_usage_list, thismonth_usage_list
+        return last_daily_usage_list, yearly_charge_list, yearly_usage_list, thismonth_usage_list, last_date_list
 
     def _get_user_ids(self, driver):
 
@@ -213,7 +215,8 @@ class DataFetcher:
             yearly_charge = driver.find_element(By.XPATH, "//ul[@class='total']/li[2]/span").text
         else:
             yearly_usage = 0
-            yearly_charge = 0     
+            yearly_charge = 0
+        
         
         
         self._click_button(driver, By.XPATH, "//div[@class='el-tabs__nav is-top']/div[@id='tab-second']")
@@ -233,9 +236,11 @@ class DataFetcher:
         electricity_date_list = driver.find_elements(By.XPATH, "//div[@class='el-table__body-wrapper is-scrolling-none']/table/tbody/tr/td[1]/div")
         electricity_value_list = driver.find_elements(By.XPATH, "//div[@class='el-table__body-wrapper is-scrolling-none']/table/tbody/tr/td[2]/div")
         
-        logging.info(f"electricity_last_date： {electricity_date_list[0].text} ")
+        # logging.info(f"electricity_last_date： {electricity_date_list[0].text} ")
         
-        thismonth = electricity_date_list[0].text.split("-")[1]
+        last_date = electricity_date_list[0].text
+        
+        thismonth = last_date.split("-")[1]
         
         logging.info(f"thismonth： {thismonth} ")
         
@@ -243,7 +248,7 @@ class DataFetcher:
             if electricity_date_list[m].text.split("-")[1] == thismonth:
                 thismonth_usage += float(electricity_value_list[m].text)
                 
-        return yearly_usage, yearly_charge, round(thismonth_usage,2)
+        return yearly_usage, yearly_charge, round(thismonth_usage,2), last_date
 
         
 
