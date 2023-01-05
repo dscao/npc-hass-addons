@@ -127,7 +127,7 @@ class DataFetcher:
         for i in range(1, len(user_id_list) + 1):
             balance = self._get_eletric_balance(driver)
             balance_pay = self._get_eletric_balance_pay(driver)
-            if (balance_pay == "当期已结清"):
+            if (balance_pay == "当期已结清" or balance_pay == "预计可用天数"):
                 balance_need_pay = 0
             else:
                 balance_need_pay = balance
