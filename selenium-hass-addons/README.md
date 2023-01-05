@@ -102,7 +102,7 @@ template:
         unit_of_measurement: "CNY"
 
       - name: electricity_balance_is_pay_entity
-        unique_id: electricity_charge_balance_entity
+        unique_id: electricity_balance_is_pay_entity
         state: "{{ state_attr('sensor.electricity_95598', 'is_pay') }}"
  
       - name: last_electricity_usage_entity
@@ -157,7 +157,7 @@ template:
         unit_of_measurement: "CNY"
 
       - name: electricity_balance_is_pay_entity_户号
-        unique_id: electricity_charge_balance_entity_户号
+        unique_id: electricity_balance_is_pay_entity_户号
         state: "{{ state_attr('sensor.electricity_95598_户号', 'is_pay') }}"
  
       - name: last_electricity_usage_entity_户号
