@@ -72,10 +72,11 @@ git pull
 sensor.electricity_95598：电费余额/上期账单金额
 is_pay: 是否当期已结清
 need_pay: 账单欠费金额（后付费用户）
-last_electricity_usage：最近一天用电量
+last_electricity_usage：最近一天用电量（数据更新的最后一天）
 thismonth_electricity_usage: 本月用电量
 yearly_electricity_usage： 今年以来用电量
 yearly_electricity_charge: 今年以来电费
+last_date: 数据更新的最后日期
 ```
 
 __注：如果你有一个户号，在HA里就是以上实体名；如果你有多个户号，实体名称还要加 “\_户号”后缀，举例:sensor.electricity_95598_1234567890__
@@ -133,6 +134,10 @@ template:
         state: "{{ state_attr('sensor.electricity_95598', 'thismonth_electricity_usage') }}"
         state_class: measurement
         unit_of_measurement: "KWH"
+        
+      - name: electricity_last_date
+        unique_id: electricity_last_date
+        state: "{{ state_attr('sensor.electricity_95598', 'last_date') }}"
 ```
 
 如果你有多个户号，每个户号参照以下配置
@@ -184,6 +189,10 @@ template:
         state: "{{ state_attr('sensor.electricity_95598_户号', 'thismonth_electricity_usage') }}"
         state_class: measurement
         unit_of_measurement: "KWH"
+        
+      - name: electricity_last_date_户号
+        unique_id: electricity_last_date_户号
+        state: "{{ state_attr('sensor.electricity_95598_户号', 'last_date') }}"
 ```
 
 
