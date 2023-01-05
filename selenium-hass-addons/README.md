@@ -135,8 +135,8 @@ template:
         state_class: measurement
         unit_of_measurement: "KWH"
         
-      - name: electricity_last_date
-        unique_id: electricity_last_date
+      - name: electricity_last_date_entity
+        unique_id: electricity_last_date_entity
         state: "{{ state_attr('sensor.electricity_95598', 'last_date') }}"
 ```
 
@@ -190,8 +190,8 @@ template:
         state_class: measurement
         unit_of_measurement: "KWH"
         
-      - name: electricity_last_date_户号
-        unique_id: electricity_last_date_户号
+      - name: electricity_last_date_entity_户号
+        unique_id: electricity_last_date_entity_户号
         state: "{{ state_attr('sensor.electricity_95598_户号', 'last_date') }}"
 ```
 
